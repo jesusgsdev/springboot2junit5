@@ -5,6 +5,10 @@ import com.jesusgsdev.repositories.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class BookService {
 
@@ -15,4 +19,8 @@ public class BookService {
         return bookRepository.save(book);
     }
 
+    @Transactional
+    public List<Book> findBooksByAuthor(String author){
+        return bookRepository.findBookByAuthor(author).collect(Collectors.toList());
+    }
 }
