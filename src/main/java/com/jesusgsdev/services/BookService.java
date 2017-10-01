@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,5 +23,9 @@ public class BookService {
     @Transactional
     public List<Book> findBooksByAuthor(String author){
         return bookRepository.findBookByAuthor(author).collect(Collectors.toList());
+    }
+
+    public Optional<Book> findBookByDetails(String title, Double price, String author, Integer pages){
+        return bookRepository.findBookByTitleAndPriceAndAuthorAndPages(title, price, author, pages);
     }
 }

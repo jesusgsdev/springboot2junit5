@@ -1,25 +1,19 @@
-package com.jesusgsdev.entities;
+package com.jesusgsdev.dtos;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.persistence.*;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 
-@Entity
-@Table(name = "book")
-public class Book {
+public class BookDTO extends BaseDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank
     @Length(max = 140)
-    @Column(length = 140)
     private String title;
 
     @DecimalMax("199.99")
@@ -28,19 +22,30 @@ public class Book {
 
     @NotBlank
     @Length(max = 155)
-    @Column(length = 155)
     private String author;
 
     @Min(1)
     private Integer pages;
 
-    public Book() { }
+    public BookDTO() { }
 
-    public Book(String title, Double price, String author, Integer pages) {
+    public BookDTO(String title, Double price, String author, Integer pages) {
         this.title = title;
         this.price = price;
         this.author = author;
         this.pages = pages;
+    }
+
+    private BookDTO(Builder builder) {
+        this.id = builder.id;
+        this.title = builder.name;
+        this.price = builder.price;
+        this.author = builder.author;
+        this.pages = builder.pages;
+    }
+
+    public static Builder newBookDTO() {
+        return new Builder();
     }
 
     public Long getId() {
@@ -86,9 +91,9 @@ public class Book {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Book)) return false;
+        if (!(o instanceof BookDTO)) return false;
 
-        Book book = (Book) o;
+        BookDTO book = (BookDTO) o;
 
         if (!id.equals(book.id)) return false;
         if (!title.equals(book.title)) return false;
@@ -116,5 +121,45 @@ public class Book {
                 .append("author", author)
                 .append("pages", pages)
                 .toString();
+    }
+
+    public static final class Builder {
+        private Long id;
+        private String name;
+        private Double price;
+        private String author;
+        private Integer pages;
+
+        private Builder() {
+        }
+
+        public BookDTO build() {
+            return new BookDTO(this);
+        }
+
+        public Builder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder price(Double price) {
+            this.price = price;
+            return this;
+        }
+
+        public Builder author(String author) {
+            this.author = author;
+            return this;
+        }
+
+        public Builder pages(Integer pages) {
+            this.pages = pages;
+            return this;
+        }
     }
 }
