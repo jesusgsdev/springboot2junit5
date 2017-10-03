@@ -35,8 +35,3 @@ buildNumber.properties
 mvnw
 mvnw.cmd
 .mvn/*
-src/main/resources/static/
-src/main/resources/templates/
-src/main/java/com/jesusgsdev/configuration/
-src/test/e2e/
-src/test/integration/
