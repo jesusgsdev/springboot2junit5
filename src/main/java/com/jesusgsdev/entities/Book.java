@@ -1,5 +1,7 @@
 package com.jesusgsdev.entities;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
@@ -34,13 +36,19 @@ public class Book {
     @Min(1)
     private Integer pages;
 
+    @NotBlank
+    @Length(max = 140)
+    @Column(length = 140)
+    private String provider;
+
     public Book() { }
 
-    public Book(String title, Double price, String author, Integer pages) {
+    public Book(String title, Double price, String author, Integer pages, String provider) {
         this.title = title;
         this.price = price;
         this.author = author;
         this.pages = pages;
+        this.provider = provider;
     }
 
     public Long getId() {
@@ -83,38 +91,51 @@ public class Book {
         this.pages = pages;
     }
 
+    public String getProvider() {
+        return provider;
+    }
+
+    public void setProvider(String provider) {
+        this.provider = provider;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Book)) return false;
+
+        if (o == null || getClass() != o.getClass()) return false;
 
         Book book = (Book) o;
 
-        if (!id.equals(book.id)) return false;
-        if (!title.equals(book.title)) return false;
-        if (!price.equals(book.price)) return false;
-        if (!author.equals(book.author)) return false;
-        return pages.equals(book.pages);
+        return new EqualsBuilder()
+                .append(title, book.title)
+                .append(price, book.price)
+                .append(author, book.author)
+                .append(pages, book.pages)
+                .append(provider, book.provider)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + title.hashCode();
-        result = 31 * result + price.hashCode();
-        result = 31 * result + author.hashCode();
-        result = 31 * result + pages.hashCode();
-        return result;
+        return new HashCodeBuilder(17, 37)
+                .append(title)
+                .append(price)
+                .append(author)
+                .append(pages)
+                .append(provider)
+                .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .append("id", id)
-                .append("name", title)
+                .append("title", title)
                 .append("price", price)
                 .append("author", author)
                 .append("pages", pages)
+                .append("provider", provider)
                 .toString();
     }
 }

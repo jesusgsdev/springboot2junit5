@@ -28,7 +28,7 @@ class BookServiceTests {
     @Test
     @DisplayName("Add a new book in the Bookshop")
     void saveTest(){
-        Book book = new Book("Book Name", 9.99, "Author Name Test", 200);
+        Book book = new Book("Book Name", 9.99, "Author Name Test", 200, "provider");
         Book savedBook = bookService.save(book);
 
         assertNotNull(savedBook);
@@ -39,9 +39,9 @@ class BookServiceTests {
     @DisplayName("Find all books for a given author name")
     void findBooksByAuthor(){
         String author = UUID.randomUUID().toString().substring(0,10);
-        Book book1 = new Book("Book Name", 9.99, author, 200);
-        Book book2 = new Book("Book Name 2", 9.99, "Author Name 2", 200);
-        Book book3 = new Book("Book Name 3", 9.99, author, 200);
+        Book book1 = new Book("Book Name", 9.99, author, 200, "provider");
+        Book book2 = new Book("Book Name 2", 9.99, "Author Name 2", 200, "provider");
+        Book book3 = new Book("Book Name 3", 9.99, author, 200, "provider");
         bookService.save(book1);
         bookService.save(book2);
         bookService.save(book3);
@@ -57,21 +57,22 @@ class BookServiceTests {
     @Test
     @DisplayName("Find a book by all its details")
     void findBookByDetails(){
-        final String title = "Book Title", author = "Author Details Test";
+        final String title = "Book Title", author = "Author Details Test", provider = "Provider Name";
         final Double price = 9.99D;
         final Integer pages = 100;
 
-        Book book = new Book(title, price, author, pages);
+        Book book = new Book(title, price, author, pages, provider);
         bookService.save(book);
 
-        final Optional<Book> optionalBook = bookService.findBookByDetails(title, price, author, pages);
+        final Optional<Book> optionalBook = bookService.findBookByDetails(title, price, author, pages, provider);
 
         assertAll( "Book is present and matches the details",
                 () -> assertTrue(optionalBook.isPresent()),
                 () -> assertEquals(title, optionalBook.get().getTitle()),
                 () -> assertEquals(price, optionalBook.get().getPrice()),
                 () -> assertEquals(author, optionalBook.get().getAuthor()),
-                () -> assertEquals(pages, optionalBook.get().getPages())
+                () -> assertEquals(pages, optionalBook.get().getPages()),
+                () -> assertEquals(provider, optionalBook.get().getProvider())
         );
         assertTrue(optionalBook.isPresent());
     }

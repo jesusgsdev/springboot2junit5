@@ -25,7 +25,7 @@ public class BookService {
         return bookRepository.findBookByAuthor(author).collect(Collectors.toList());
     }
 
-    public Optional<Book> findBookByDetails(String title, Double price, String author, Integer pages){
-        return bookRepository.findBookByTitleAndPriceAndAuthorAndPages(title, price, author, pages);
+    public Optional<Book> findBookByDetails(String title, Double price, String author, Integer pages, String provider){
+        return bookRepository.findBookByTitleAndPriceAndAuthorAndPagesAndProvider(title, price, author, pages, provider);
     }
 }
