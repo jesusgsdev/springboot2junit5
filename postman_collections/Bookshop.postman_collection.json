@@ -1,0 +1,42 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Bookshop",
+		"_postman_id": "a3d18800-4a29-bc44-c24e-6e8680aa5d52",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get all books",
+			"request": {
+				"url": "localhost:8080/books/",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Add a new book",
+			"request": {
+				"url": "localhost:8080/books/",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"The Title\",\n  \"price\": \"19.99\",\n  \"author\": \"Author Test\",\n  \"pages\": \"222\",\n  \"provider\": \"PROVIDER_ONE\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

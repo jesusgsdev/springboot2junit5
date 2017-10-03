@@ -28,4 +28,8 @@ public class BookService {
     public Optional<Book> findBookByDetails(String title, Double price, String author, Integer pages, String provider){
         return bookRepository.findBookByTitleAndPriceAndAuthorAndPagesAndProvider(title, price, author, pages, provider);
     }
+
+    public List<Book> findAll() {
+        return bookRepository.findAll();
+    }
 }

@@ -6,6 +6,9 @@ import com.jesusgsdev.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class BookFacade {
 
@@ -23,5 +26,18 @@ public class BookFacade {
             bookDTO.setId(book.getId());
         }
         return bookDTO;
+    }
+
+    public List<BookDTO> findAll(){
+        return bookService.findAll()
+                .stream().map(b -> new BookDTO.Builder()
+                        .id(b.getId())
+                        .author(b.getAuthor())
+                        .title(b.getTitle())
+                        .pages(b.getPages())
+                        .price(b.getPrice())
+                        .provider(b.getProvider())
+                        .build())
+                .collect(Collectors.toList());
     }
 }
