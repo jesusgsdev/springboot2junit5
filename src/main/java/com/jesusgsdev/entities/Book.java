@@ -13,7 +13,7 @@ import javax.validation.constraints.Min;
 
 @Entity
 @Table(name = "book")
-public class Book {
+public class Book extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,6 +44,7 @@ public class Book {
     public Book() { }
 
     public Book(String title, Double price, String author, Integer pages, String provider) {
+        super();
         this.title = title;
         this.price = price;
         this.author = author;
