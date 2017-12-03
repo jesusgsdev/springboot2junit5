@@ -6,14 +6,14 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 @Repository
 public interface BookRepository extends CrudRepository<Book, Long> {
 
     List<Book> findAll();
 
-    Stream<Book> findBookByAuthor(String author);
+    List<Book> findBookByAuthor(String author);
 
-    Optional<Book> findBookByTitleAndPriceAndAuthorAndPagesAndProvider(String title, Double price, String author, Integer pages, String provider);
+    Optional<Book> findBookByIsbn(String isbn);
+
 }

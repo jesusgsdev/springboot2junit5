@@ -5,9 +5,13 @@ In this demo project I will be using Spring Boot 2.0 and jUnit 5 in their latest
 
 ## Current stack
 
-- SpringBoot 2.0.0 M4
-- jUnit 5.0.0
+- SpringBoot 2.0.0 M7
+- jUnit 5.0.2
 - H2 Database 1.4.196
+
+# Accessing to the H2 database
+You can access to the database typing `http://localhost:8080/console` and using as JDBC URL this one: `jdbc:h2:mem:bookshop`
+and the user name is `sa` and the password is `password`.
 
 # Bookshop HUB
 This module will be the main hub. Here we will have a H2 database were we will be storing

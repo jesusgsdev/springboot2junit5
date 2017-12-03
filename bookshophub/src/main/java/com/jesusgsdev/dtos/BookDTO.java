@@ -1,20 +1,24 @@
 package com.jesusgsdev.dtos;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import com.jesusgsdev.entities.Book;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 
 public class BookDTO extends BaseDTO {
 
     private Long id;
 
-    @NotBlank
+    @NotEmpty
+    @Length(min = 9, max = 13)
+    private String ISBN;
+
+    @NotEmpty
     @Length(max = 140)
     private String title;
 
@@ -22,26 +26,54 @@ public class BookDTO extends BaseDTO {
     @DecimalMin("0.0")
     private Double price;
 
-    @NotBlank
+    @NotEmpty
     @Length(max = 155)
     private String author;
 
     @Min(1)
     private Integer pages;
 
-    @NotBlank
+    @NotEmpty
     @Length(max = 140)
     private String provider;
 
-    public BookDTO() {     }
+    public BookDTO() { }
+
+    public BookDTO(Long id, @NotEmpty @Length(max = 13) @UniqueElements String ISBN, @NotEmpty @Length(max = 140) String title, @DecimalMax("199.99") @DecimalMin("0.0") Double price, @NotEmpty @Length(max = 155) String author, @Min(1) Integer pages, @NotEmpty @Length(max = 140) String provider) {
+        super();
+        this.id = id;
+        this.ISBN = ISBN;
+        this.title = title;
+        this.price = price;
+        this.author = author;
+        this.pages = pages;
+        this.provider = provider;
+    }
+
+    public static BookDTO fromBook(final Book book){
+        return BookDTO.newBookDTO()
+                .id(book.getId())
+                .isbn(book.getIsbn())
+                .author(book.getAuthor())
+                .title(book.getTitle())
+                .pages(book.getPages())
+                .price(book.getPrice())
+                .provider(book.getProvider())
+                .build();
+    }
 
     private BookDTO(Builder builder) {
-        setId(builder.id);
-        setTitle(builder.title);
-        setPrice(builder.price);
-        setAuthor(builder.author);
-        setPages(builder.pages);
-        setProvider(builder.provider);
+        this.id = builder.id;
+        this.ISBN = builder.ISBN;
+        this.title = builder.title;
+        this.price = builder.price;
+        this.author = builder.author;
+        this.pages = builder.pages;
+        this.provider = builder.provider;
+    }
+
+    public static Builder newBookDTO() {
+        return new Builder();
     }
 
     public Long getId() {
@@ -50,6 +82,14 @@ public class BookDTO extends BaseDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getISBN() {
+        return ISBN;
+    }
+
+    public void setISBN(String ISBN) {
+        this.ISBN = ISBN;
     }
 
     public String getTitle() {
@@ -95,35 +135,23 @@ public class BookDTO extends BaseDTO {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof BookDTO)) return false;
 
         BookDTO bookDTO = (BookDTO) o;
 
-        return new EqualsBuilder()
-                .append(title, bookDTO.title)
-                .append(price, bookDTO.price)
-                .append(author, bookDTO.author)
-                .append(pages, bookDTO.pages)
-                .append(provider, bookDTO.provider)
-                .isEquals();
+        return ISBN.equals(bookDTO.ISBN);
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(title)
-                .append(price)
-                .append(author)
-                .append(pages)
-                .append(provider)
-                .toHashCode();
+        return ISBN.hashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .append("id", id)
+                .append("isbn", ISBN)
                 .append("title", title)
                 .append("price", price)
                 .append("author", author)
@@ -135,47 +163,53 @@ public class BookDTO extends BaseDTO {
 
     public static final class Builder {
         private Long id;
-        private String title;
-        private Double price;
-        private String author;
-        private Integer pages;
-        private String provider;
+        private @NotEmpty @Length(max = 13) @UniqueElements String ISBN;
+        private @NotEmpty @Length(max = 140) String title;
+        private @DecimalMax("199.99") @DecimalMin("0.0") Double price;
+        private @NotEmpty @Length(max = 155) String author;
+        private @Min(1) Integer pages;
+        private @NotEmpty @Length(max = 140) String provider;
 
-        public Builder() {
-        }
-
-        public Builder id(Long val) {
-            id = val;
-            return this;
-        }
-
-        public Builder title(String val) {
-            title = val;
-            return this;
-        }
-
-        public Builder price(Double val) {
-            price = val;
-            return this;
-        }
-
-        public Builder author(String val) {
-            author = val;
-            return this;
-        }
-
-        public Builder pages(Integer val) {
-            pages = val;
-            return this;
-        }
-
-        public Builder provider(String val) {
-            provider = val;
-            return this;
+        private Builder() {
         }
 
         public BookDTO build() {
             return new BookDTO(this);
+        }
+
+        public Builder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder isbn(String ISBN) {
+            this.ISBN = ISBN;
+            return this;
+        }
+
+        public Builder title(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public Builder price(Double price) {
+            this.price = price;
+            return this;
+        }
+
+        public Builder author(String author) {
+            this.author = author;
+            return this;
+        }
+
+        public Builder pages(Integer pages) {
+            this.pages = pages;
+            return this;
+        }
+
+        public Builder provider(String provider) {
+            this.provider = provider;
+            return this;
         }
     }
 }
