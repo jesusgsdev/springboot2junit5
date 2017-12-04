@@ -22,9 +22,4 @@ all books we are receiving from the different providers.
 
 # Bookshop Provider One and Two
 This two modules will be in charge of send books to the Bookshop HUB so they will be acting
-as producers sending JSON petitions to Bookshop HUB. 
-
-# TODO
-Update postman collection
-Test full flow of create a customer, book and then a purchase
-Do good tests
+as producers sending JSON petitions to Bookshop HUB.
