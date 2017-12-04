@@ -13,6 +13,9 @@ In this demo project I will be using Spring Boot 2.0 and jUnit 5 in their latest
 You can access to the database typing `http://localhost:8080/console` and using as JDBC URL this one: `jdbc:h2:mem:bookshop`
 and the user name is `sa` and the password is `password`.
 
+# Postman Collection
+I have provided a Postman collection with all the existing endpoints and examples of calls for each one of them.
+
 # Bookshop HUB
 This module will be the main hub. Here we will have a H2 database were we will be storing
 all books we are receiving from the different providers.
@@ -20,3 +23,8 @@ all books we are receiving from the different providers.
 # Bookshop Provider One and Two
 This two modules will be in charge of send books to the Bookshop HUB so they will be acting
 as producers sending JSON petitions to Bookshop HUB. 
+
+# TODO
+Update postman collection
+Test full flow of create a customer, book and then a purchase
+Do good tests

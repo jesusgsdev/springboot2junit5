@@ -7,7 +7,6 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.Column;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
@@ -37,7 +36,6 @@ public class CustomerDTO extends BaseDTO {
     @Column(length = 150)
     private String email;
 
-    @OneToMany(mappedBy = "customer")
     private List<Purchase> purchases;
 
     public CustomerDTO() { }

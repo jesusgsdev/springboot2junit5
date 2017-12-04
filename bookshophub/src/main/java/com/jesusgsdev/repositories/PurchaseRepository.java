@@ -4,13 +4,13 @@ import com.jesusgsdev.entities.Purchase;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.stream.Stream;
+import java.util.List;
 
 @Repository
 public interface PurchaseRepository extends CrudRepository<Purchase, Long> {
 
-    Stream<Purchase> findPurchaseByBookId(String bookId);
+    List<Purchase> findPurchaseByBookId(String bookId);
 
-    Stream<Purchase> findPurchaseByCustomerEmail(String customerEmail);
+    List<Purchase> findPurchaseByCustomerEmail(String customerEmail);
 
 }

@@ -66,6 +66,6 @@ public class PurchaseFacade {
     }
 
     public List<PurchaseResponseDTO> findPurchasesByCustomerEmail(String email){
-        return purchaseService.findPurchasesByCustomerEmail(email).map(p -> PurchaseResponseDTO.fromPurchase(p)).collect(Collectors.toList());
+        return purchaseService.findPurchasesByCustomerEmail(email).stream().map(PurchaseResponseDTO::fromPurchase).collect(Collectors.toList());
     }
 }

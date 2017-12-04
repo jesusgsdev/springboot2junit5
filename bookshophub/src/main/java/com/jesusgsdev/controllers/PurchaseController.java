@@ -17,12 +17,12 @@ public class PurchaseController {
     PurchaseFacade purchaseFacade;
 
     @PostMapping
-    public PurchaseResponseDTO addBook(@RequestBody @Valid PurchaseRequestDTO purchaseRequestDTO) {
+    public PurchaseResponseDTO addPurchase(@RequestBody @Valid PurchaseRequestDTO purchaseRequestDTO) {
         return purchaseFacade.performPurchase(purchaseRequestDTO);
     }
 
-    @GetMapping
-    public List<PurchaseResponseDTO> findPurchasesByCustomerEmail(String email){
+    @GetMapping(params = "email")
+    public List<PurchaseResponseDTO> findPurchasesByCustomerEmail(@RequestParam("email") String email){
         return purchaseFacade.findPurchasesByCustomerEmail(email);
     }
 

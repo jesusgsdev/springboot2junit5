@@ -7,8 +7,6 @@ public class PurchaseResponseDTO extends BaseDTO {
 
     private Long id;
 
-    private CustomerDTO customer;
-
     private Double price;
 
     private BookDTO book;
@@ -19,10 +17,9 @@ public class PurchaseResponseDTO extends BaseDTO {
 
     public PurchaseResponseDTO() { }
 
-    public PurchaseResponseDTO(Long id, CustomerDTO customer, Double price, BookDTO book, String paymentMethod, String currency) {
+    public PurchaseResponseDTO(Long id, Double price, BookDTO book, String paymentMethod, String currency) {
         super();
         this.id = id;
-        this.customer = customer;
         this.price = price;
         this.book = book;
         this.paymentMethod = paymentMethod;
@@ -31,7 +28,6 @@ public class PurchaseResponseDTO extends BaseDTO {
 
     private PurchaseResponseDTO(Builder builder) {
         this.id = builder.id;
-        this.customer = builder.customer;
         this.price = builder.price;
         this.book = builder.book;
         this.paymentMethod = builder.paymentMethod;
@@ -40,7 +36,6 @@ public class PurchaseResponseDTO extends BaseDTO {
 
     public static PurchaseResponseDTO fromPurchase(Purchase purchase){
         return PurchaseResponseDTO.newPurchaseResponseDTO()
-                .customer(CustomerDTO.fromCustomer(purchase.getCustomer()))
                 .price(purchase.getPrice())
                 .book(BookDTO.fromBook(purchase.getBook()))
                 .paymentMethod(purchase.getPaymentMethod().toString())
@@ -58,14 +53,6 @@ public class PurchaseResponseDTO extends BaseDTO {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public CustomerDTO getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(CustomerDTO customer) {
-        this.customer = customer;
     }
 
     public Double getPrice() {
@@ -119,7 +106,6 @@ public class PurchaseResponseDTO extends BaseDTO {
     public String toString() {
         return new ToStringBuilder(this)
                 .append("id", id)
-                .append("customer", customer)
                 .append("price", price)
                 .append("book", book)
                 .append("paymentMethod", paymentMethod)

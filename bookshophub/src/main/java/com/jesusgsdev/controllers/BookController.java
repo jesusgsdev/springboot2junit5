@@ -13,7 +13,7 @@ import java.util.List;
 public class BookController {
 
     @Autowired
-    BookFacade bookFacade;
+    private BookFacade bookFacade;
 
     @PostMapping
     public BookDTO addBook(@RequestBody @Valid BookDTO bookDTO) {
@@ -21,8 +21,18 @@ public class BookController {
     }
 
     @GetMapping
-    public List<BookDTO> findAll(){
+    public List<BookDTO> getAll(){
         return bookFacade.findAll();
+    }
+
+    @GetMapping(params = "isbn")
+    public BookDTO getBookByISBN(@RequestParam("isbn") String isbn) {
+        return bookFacade.findBookByISBN(isbn);
+    }
+
+    @GetMapping(params = "author")
+    public List<BookDTO> getBooksByAuthor(@RequestParam("author") String author) {
+        return bookFacade.findBooksByAuthor(author);
     }
 
 }
